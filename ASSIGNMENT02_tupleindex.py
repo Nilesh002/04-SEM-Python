@@ -1,4 +1,4 @@
-# Write a program to index of the number 56 present in the tuple
+# Write a program to index of the number 65 present in the tuple
 
 b1=int(input("Enter the number: "))
 b2=int(input("Enter the number: "))
