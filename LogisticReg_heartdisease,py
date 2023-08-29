@@ -1,0 +1,44 @@
+# IMPROPER CSV FILE
+
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+data=pd.read_csv("/content/framingham.csv")
+data=data.dropna()
+
+x=data.drop('TenYearCHD',axis=1)
+y=data.loc[:,'TenYearCHD']
+print(y)
+
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.1,stratify=y,random_state=1)
+
+# ACTUALLY TRAINING/FITTING DATA
+
+model=LogisticRegression()
+model.fit(x_train,y_train)
+
+#TESTING MODEL BASED ON  TRAINING DATA
+
+x_train_pred=model.predict(x_train)
+x_train_as=accuracy_score(x_train_pred,y_train)
+print(f"\nThe percentage accuracy score for Training Data is {x_train_as*100}\n")
+
+x_test_data=model.predict(x_test)
+x_test_as=accuracy_score(x_test_data,y_test)
+print(f"The percentage accuracy score for Test Data is {x_test_as*100}\n")
+
+# TESTING THE MODEL
+
+input_data=(1,48,1,1,20,0,0,0,0,210,109,77,24.12,73,79)
+inp=np.array(input_data).reshape((1,-1))
+
+label=model.predict(inp)
+
+if(label[0]==0):
+  print("No chances of Heart Disease\n")
+else:
+  print("Heart Disease present\n")
